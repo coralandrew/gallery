@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Images</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color: #111; color: #f1c40f; }
+        nav { background-color: #f1c40f; }
+        nav .navbar-brand { color: black !important; font-weight: bold; }
+
+        .gallery-img {
+            width: 100%; height: 220px; object-fit: cover;
+            border-radius: 12px; transition: 0.3s;
+        }
+        .gallery-card {
+            background-color: #222; border: 2px solid #f1c40f;
+            border-radius: 14px; transition: .25s;
+        }
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 25px 8px rgba(241,196,15,.85);
+        }
+        footer { background: #f1c40f; color:#000; font-weight:bold; padding:20px; text-align:center; margin-top:50px; }
+
+        .btn-switch, .btn-grid {
+            background:#f1c40f; color:#111; border:none; font-weight:bold; margin-right:10px;
+        }
+        .btn-switch:hover, .btn-grid:hover { background:#d4ac0d; }
+
+        .lightbox-bg {
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.9); display:none; justify-content:center;
+            align-items:center; z-index:9999;
+        }
+        .lightbox-img {
+            max-width:90%; max-height:90%; border-radius:12px;
+            box-shadow:0 0 25px 5px rgba(241,196,15,0.9);
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="images.html">Fishes 🐠</a>
+        <div class="ms-auto">
+            <a href="images.html" class="btn btn-switch">Images</a>
+            <a href="videos.html" class="btn btn-switch">Videos</a>
+        </div>
+    </div>
+</nav>
+
+<header class="text-center py-5">
+    <h1 class="fw-bold">A Gallery for Cute Fishes</h1>
+    <p class="text-light">Dive No More, Cause Fishes are off the Shore!!</p>
+</header>
+
+<div class="container mb-4">
+    <button class="btn btn-grid" onclick="setGrid(6)">2 Columns</button>
+    <button class="btn btn-grid" onclick="setGrid(4)">3 Columns</button>
+    <button class="btn btn-grid" onclick="setGrid(3)">4 Columns</button>
+</div>
+
+<div class="container">
+    <div class="row" id="gallery-container"></div>
+</div>
+
+<div class="lightbox-bg" id="lightbox">
+    <img class="lightbox-img" id="lightbox-img">
+</div>
+
+<script>
+const images = [
+    "https://images.pexels.com/photos/3220368/pexels-photo-3220368.jpeg",
+    "https://images.pexels.com/photos/1112007/pexels-photo-1112007.jpeg",
+    "https://images.pexels.com/photos/3905045/pexels-photo-3905045.jpeg",
+    "https://images.pexels.com/photos/128756/pexels-photo-128756.jpeg",
+    "https://images.pexels.com/photos/54313/longhorn-cowfish-fish-yellow-cowfish-54313.jpeg",
+    "https://images.pexels.com/photos/12861720/pexels-photo-12861720.jpeg",
+    "https://images.pexels.com/photos/19655034/pexels-photo-19655034.jpeg",
+    "https://images.pexels.com/photos/8887776/pexels-photo-8887776.jpeg",
+    "https://images.pexels.com/photos/2109800/pexels-photo-2109800.jpeg",
+    "https://images.pexels.com/photos/19590484/pexels-photo-19590484.jpeg",
+    "https://images.pexels.com/photos/5150077/pexels-photo-5150077.jpeg",
+    "https://images.pexels.com/photos/29704985/pexels-photo-29704985.jpeg",
+];
+const titles = [
+    "Yellow Tang and Blue Tang","Copperband Butterflyfish","Emperor Red Snapper","Clownfish",
+    "Long Horn Cowfish","Blue Tang Fish","Foxface Rabbitfish","Naso Tang",
+    "Oscar Fish","Lionfish","Blue Mustard Betta","Betta Fish"
+];
+
+const gallery = document.getElementById("gallery-container");
+let currentColSize = 4;
+
+function loadImages() {
+    gallery.innerHTML = "";
+    for (let i = 0; i < images.length; i++) {
+        gallery.innerHTML += `
+            <div class="col-md-${currentColSize} mb-4">
+                <div class="card gallery-card">
+                    <img src="${images[i]}" class="gallery-img" onclick="openLightbox('${images[i]}')">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color:#f1c40f;">${titles[i]}</h5>
+                    </div>
+                </div>
+            </div>`;
+    }
+}
+
+function openLightbox(src) {
+    document.getElementById("lightbox-img").src = src;
+    document.getElementById("lightbox").style.display = "flex";
+}
+document.getElementById("lightbox").onclick = () => {
+    document.getElementById("lightbox").style.display = "none";
+};
+
+function setGrid(size) {
+    currentColSize = size;
+    loadImages();
+}
+
+loadImages();
+</script>
+
+<footer>Andrew B. Coral © 2025</footer>
+<div class="container text-center mt-3 mb-5" style="color:#f1c40f; font-size: 14px;">
+        <p>All fish images are from <a href="https://www.pexels.com" target="_blank"
+                style="color:#f1c40f; text-decoration: underline;">Pexels</a> and are free to use.</p>
+    </div>
+</body>
+</html>

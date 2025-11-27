@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Videos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color:#111; color:#f1c40f; }
+        nav { background-color:#f1c40f; }
+        nav .navbar-brand { color:#000 !important; font-weight:bold; }
+
+        .gallery-card {
+            background:#222; border:2px solid #f1c40f;
+            border-radius:14px; transition:.25s;
+            cursor: pointer;
+        }
+        .gallery-card:hover {
+            transform:translateY(-6px);
+            box-shadow:0 0 25px 8px rgba(241,196,15,.85);
+        }
+
+        .gallery-video {
+            width:100%; height:220px; border-radius:12px; object-fit:cover;
+        }
+
+        .btn-switch, .btn-grid {
+            background:#f1c40f; color:#111; font-weight:bold; border:none; margin-right:10px;
+        }
+        .btn-switch:hover, .btn-grid:hover { background:#d4ac0d; }
+
+        footer {
+            background:#f1c40f; color:#111; text-align:center; padding:20px; margin-top:50px; font-weight:bold;
+        }
+
+        /* Lightbox for videos */
+        .lightbox-bg {
+            position: fixed; top:0; left:0;
+            width:100%; height:100%;
+            background: rgba(0,0,0,0.9);
+            display:none;
+            justify-content:center;
+            align-items:center;
+            z-index:9999;
+        }
+
+        .lightbox-video {
+            max-width:90%;
+            max-height:80%;
+            border-radius:12px;
+            box-shadow:0 0 25px 5px rgba(241,196,15,0.9);
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand btn btn-switch" href="images.html">Fishes 🐠</a>
+        <div class="ms-auto">
+            <a href="index.html" class="btn btn-switch">Images</a>
+            <a href="videos.html" class="btn btn-switch">Videos</a>
+        </div>
+    </div>
+</nav>
+
+<header class="text-center py-4">
+    <h1 class="fw-bold">Fish Videos</h1>
+    <p class="text-light">Swim with these amazing underwater clips!</p>
+</header>
+
+<div class="container mb-4">
+    <button class="btn btn-grid" onclick="setGrid(6)">2 Columns</button>
+    <button class="btn btn-grid" onclick="setGrid(4)">3 Columns</button>
+    <button class="btn btn-grid" onclick="setGrid(3)">4 Columns</button>
+</div>
+
+<div class="container">
+    <div class="row" id="video-container"></div>
+</div>
+
+<!-- Video Lightbox -->
+<div class="lightbox-bg" id="video-lightbox">
+    <video id="lightbox-player" class="lightbox-video" controls autoplay></video>
+</div>
+
+<script>
+const videos = [
+     "https://player.vimeo.com/external/10068514.sd.mp4",
+    "https://player.vimeo.com/external/1534875.sd.mp4",
+    "https://player.vimeo.com/external/5548030.sd.mp4",
+    "https://player.vimeo.com/external/3765025.sd.mp4",
+    "https://player.vimeo.com/external/5548246.sd.mp4",
+    "https://player.vimeo.com/external/6590365.sd.mp4",
+    "https://player.vimeo.com/external/3765022.sd.mp4",
+    "https://player.vimeo.com/external/6590365.sd.mp4",
+    "https://player.vimeo.com/external/9796986.sd.mp4",
+    "https://player.vimeo.com/external/4434943.sd.mp4",
+    "https://player.vimeo.com/external/10068046.sd.mp4",
+    "https://player.vimeo.com/external/31366524.sd.mp4"
+];
+
+const container = document.getElementById("video-container");
+let currentColSize = 4;
+
+function loadVideos() {
+    container.innerHTML = "";
+    for (let i = 0; i < videos.length; i++) {
+        container.innerHTML += `
+            <div class="col-md-${currentColSize} mb-4">
+                <div class="card gallery-card p-2" onclick="openVideo('${videos[i]}')">
+                    <video class="gallery-video">
+                        <source src="${videos[i]}" type="video/mp4">
+                    </video>
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color:#f1c40f;">Video ${i+1}</h5>
+                    </div>
+                </div>
+            </div>`;
+    }
+}
+
+function openVideo(src) {
+    const player = document.getElementById("lightbox-player");
+    const box = document.getElementById("video-lightbox");
+
+    player.src = src;
+    player.play();
+    box.style.display = "flex";
+}
+
+document.getElementById("video-lightbox").onclick = function() {
+    this.style.display = "none";
+    document.getElementById("lightbox-player").pause();
+};
+
+function setGrid(size) {
+    currentColSize = size;
+    loadVideos();
+}
+
+loadVideos();
+</script>
+
+<footer>Andrew B. Coral © 2025</footer>
+<div class="container text-center mt-3 mb-5" style="color:#f1c40f; font-size: 14px;">
+        <p>All fish videos are from <a href="https://www.pexels.com" target="_blank"
+                style="color:#f1c40f; text-decoration: underline;">Pexels</a> and are free to use.</p>
+    </div>
+</body>
+</html>
